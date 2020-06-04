@@ -1,16 +1,85 @@
 <html>
-<header>
+  <header>
     <title>test</title>
-    <script type="text/javascript" src="scripts/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/handlebars/dist/handlebars.min.js"></script>
-    <script type="text/javascript" src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>    
-    <script type="text/javascript" src="js/app.js"></script>
-</header>
+    <script src="scripts/axios/dist/axios.min.js"></script>
+    <script src="scripts/jquery/dist/jquery.min.js"></script>
+    <script src="scripts/handlebars/dist/handlebars.min.js"></script>
+    <script src="scripts/semantic-ui-css/semantic.min.js"></script>
+    <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
+    <script src="js/app.js"></script>
 
-<body>
+    <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css" />
+  </header>
 
+  <body>
+    <div class="ui container" id="mainApp">
+      <!-- Nav menu -->
+      <div class="ui two item inverted green menu" id="navHeader">
+        <div class="header item">
+          <i class="spotify icon"></i>
+          Lyrics
+        </div>
+        <a href="/">
+          Lyrics
+        </a>
+        <a href="/login">
+          <i class="user icon"></i> Logged in to Spotify
+          <i class="user times icon"></i> Log in to Spotify
+        </a>
+      </div>
 
-    
-</body>
+      <!-- Error template -->
+      <script id="error-template" type="text/x-handlebars-template">
+        <div class="ui {{color}} inverted segment" style="height:250px;">
+          <h2 class="ui center aligned icon header">
+            <i class="exclamation triangle icon"></i>
+            <div class="content">
+              {{title}}
+              <div class="sub header">
+                {{message}}
+              </div>
+            </div>
+          </h2>
+        </div>
+      </script>
 
+      <!-- Lyrics Template -->
+      <script id="rates-template" type="text/x-handlebars-template">
+        <h1 class="ui header">
+          Lyrics
+        </h1>
+          <div class="ui loading basic segment">
+            <div class="ui horizontal list">
+              <div class="item">
+                <span>{{song}}</span>
+              </div>
+              <div class="item">
+                <span>{{artist}}</span>
+              </div>
+              <div class="item">
+                <span>{{album}}</span>
+              </div>
+            </div>
+            <div>{{lrc}}</div>
+          </div>
+        <hr />
+      </script>
+
+      <!-- Login prompt Template -->
+      <script id="exchange-template" type="text/x-handlebars-template">
+        <h1 class="ui header">
+          Login to Spotify
+        </h1>
+        <hr />
+      </script>
+
+      <!-- Login prompt Template -->
+      <script id="exchange-template" type="text/x-handlebars-template">
+        <h1 class="ui header">
+          Spotify Account
+        </h1>
+        <hr />
+      </script>
+    </div>
+  </body>
 </html>
