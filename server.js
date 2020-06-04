@@ -34,3 +34,25 @@ app.use(function (req, res, next) {
 app.listen(port, () => {
     console.log('listening on %d', port);
 });
+
+const { getLyrics, getLyrics1, getLyrics2 } = require('./lib/guaqb-service');
+const fs = require('fs');
+const test = () => {
+    // var data = await getLyrics1('洋蔥');
+    // console.log(data);
+    // console.log('>>>>>>>>>>>>>>>>>>>');
+    // var data2 = await getLyrics2();
+    // console.log(data2);
+    // console.log('>>>>>>>>>>>>>>>>>>>');
+    getLyrics('有一種悲傷', 'A-Lin')
+    .then(d => {
+        console.log(typeof(d));
+        console.log(d);
+    })
+    .catch(err => {
+        console.error(err);        
+    });
+    
+};
+
+test();

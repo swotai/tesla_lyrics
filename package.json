@@ -20,6 +20,7 @@
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
     "semantic-ui-css": "^2.4.1",
-    "vanilla-router": "^1.2.8"
+    "vanilla-router": "^1.2.8",
+    "zh_cn_zh_tw": "^1.0.7"
   }
 }
