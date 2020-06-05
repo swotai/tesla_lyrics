@@ -12,17 +12,17 @@
   </header>
 
   <body>
-    <div class="ui container" id="mainApp">
+    <div class="ui container" id="main-app">
       <!-- Nav menu -->
-      <div class="ui two item inverted green menu" id="navHeader">
+      <div class="ui three item inverted green menu" id="navHeader">
         <div class="header item">
           <i class="spotify icon"></i>
           Lyrics
         </div>
-        <a href="/">
+        <a class="item" href="/">
           Lyrics
         </a>
-        <a href="/login">
+        <a class="item" href="/login">
           <i class="user icon"></i> Logged in to Spotify
           <i class="user times icon"></i> Log in to Spotify
         </a>
@@ -44,17 +44,31 @@
       </script>
 
       <!-- Lyrics Template -->
-      <script id="rates-template" type="text/x-handlebars-template">
+      <script id="lyrics-template" type="text/x-handlebars-template">
         <h1 class="ui header">
           Lyrics
         </h1>
-          <div class="ui loading basic segment">
+          <div class="ui basic segment" id="lyrics-page">
+            <form class="ui form">
+              <div class="two fields">
+                <div class="field">
+                  <label>Song</label>
+                  <input type="text" name="song" id="song" placeholder="Song Name">
+                </div>
+                <div class="field">
+                  <label>Artist</label>
+                  <input type="text" name="artist" id="artist" placeholder="Artist Name (optional)">
+                </div>
+              </div>
+              <div class="ui primary submit button">Submit</div>
+              <div class="ui error message"></div>
+            </form>
             <div class="ui horizontal list">
               <div class="item">
-                <span>{{song}}</span>
+                <span>{{name}}</span>
               </div>
               <div class="item">
-                <span>{{artist}}</span>
+                <span>{{author}}</span>
               </div>
               <div class="item">
                 <span>{{album}}</span>
@@ -66,20 +80,23 @@
       </script>
 
       <!-- Login prompt Template -->
-      <script id="exchange-template" type="text/x-handlebars-template">
+      <script id="login-template" type="text/x-handlebars-template">
         <h1 class="ui header">
           Login to Spotify
         </h1>
         <hr />
       </script>
 
-      <!-- Login prompt Template -->
+      <!-- Login prompt Template 
       <script id="exchange-template" type="text/x-handlebars-template">
         <h1 class="ui header">
           Spotify Account
         </h1>
         <hr />
-      </script>
+      </script> -->
+
+      <div id="app"></div>
+
     </div>
   </body>
 </html>
