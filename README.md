@@ -20,22 +20,11 @@ API has the following params. Refer to [API documentation](http://wiki.guaqb.cn/
 
 ## Convert to Traditional Chinese
 
-_Unfortunately, can't get opencc to install w/o VS. So either keep using the hosted script ver or give it up_
-
-[opencc-js](https://developer.aliyun.com/mirror/npm/package/opencc-js/v/0.0.2)
-[opencc-nodejs](https://www.npmjs.com/package/opencc)
-
-```javascript
-(async () => {
-    const cc = await OpenCC.PresetConverter({ fromVariant: 'cn', toVariant: 'hk' });
-    console.log(cc.convert('政府初步倾向试验为绿色专线小巴设充电装置'));
-})();
-// output: 政府初步傾向試驗為綠色專線小巴設充電裝置
-```
+zh_cn_zh_tw package provides straightforward, mapping based translation.
 
 ## Node.js
 
-Ugh ok... let's learn node.js real quick
+Ugh ok... let's learn node.js real quick... ... Done ish!
 [Here](https://www.w3schools.com/nodejs/nodejs_modules.asp)
 
 ## Other notes
@@ -52,3 +41,8 @@ Notes: _Simple filter works just fine it appears_
 Looks like need to learn node.js somehow and have this hosted in home server...
 Why? coz how else can i secure my keys and secrets...
 [Keeping secrets in node.js](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716)
+
+## Session and Auth
+[Tutorial(or see passportJS doc??)](https://blog.usejournal.com/sessionless-authentication-withe-jwts-with-node-express-passport-js-69b059e4b22c#:~:text=The%20difference%20between%20the%20two,encoded%20in%20the%20JWT%20payload.)
+[PassportJS](http://www.passportjs.org/docs/downloads/html/)
+[SQLite](https://healeycodes.com/javascript/webdev/beginners/tutorial/2019/06/03/saving-data-in-javascript-without-a-database.html)
