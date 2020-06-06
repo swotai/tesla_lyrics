@@ -34,7 +34,8 @@ window.addEventListener("load", () => {
     el.html(html);
   };
 
-  // lyrics page and aux functions
+ // read song and artist from form (for now) and ask api for lyrics,
+ // then update the handlebar template
   const getLyricsResults = async () => {
     // get params from web form
     const song = $('#song').val();
