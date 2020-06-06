@@ -1,9 +1,11 @@
 window.addEventListener("load", () => {
   const el = $("#app");
+  const player = $('#player')
 
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-template").html());
-  const lyricsTemplate = Handlebars.compile($("#lyrics-template").html());
+  const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-template").html());
+  const lyricsPlayerTemplate = Handlebars.compile($("#lyrics-player-template").html());
   const loginTemplate = Handlebars.compile($("#login-template").html());
 
   // Router Declaration
@@ -41,8 +43,8 @@ window.addEventListener("load", () => {
     try {
       const response = await api.post('/lyrics', { song, artist });
       const { name, author, album, lrc } = response.data;
-      let html = lyricsTemplate({ name, author, album, lrc });
-      el.html(html);
+      let html = lyricsPlayerTemplate({ name, author, album, lrc });
+      player.html(html);
     } catch (error) {
       showError(error)
     } finally {
@@ -52,11 +54,14 @@ window.addEventListener("load", () => {
 
   // Handle Convert Button Click Event
   const getLyricsHandler = () => {
+    console.log('get lyrics clicked');
+    
     if ($('.ui.form').form('is valid')) {
       // hide error message
       $('.ui.error.message').hide();
       // Post to Express server
-      $('#lyrics-page').addClass('loading');
+      $('#lyrics-form').addClass('loading');
+      $('#lyrics-player').addClass('loading');
       getLyricsResults();
       // Prevent page from submitting to server
       return false;
@@ -65,7 +70,7 @@ window.addEventListener("load", () => {
   };
 
   router.add("/", () => {
-    let html = lyricsTemplate();
+    let html = lyricsFormTemplate();
     el.html(html);
     try {
       // Validate Form Inputs

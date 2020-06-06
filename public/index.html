@@ -43,39 +43,73 @@
         </div>
       </script>
 
+      <!-- Lyrics form Template -->
+      <script id="lyrics-form-template" type="text/x-handlebars-template">
+        <h1 class="ui header">
+          Lyrics form
+        </h1>
+        <div class="ui basic segment" id="lyrics-form">
+          <form class="ui form">
+            <div class="two fields">
+              <div class="field">
+                <label>
+                  Song
+                </label>
+                <input
+                  type="text"
+                  name="song"
+                  id="song"
+                  placeholder="Song Name"
+                />
+              </div>
+              <div class="field">
+                <label>
+                  Artist
+                </label>
+                <input
+                  type="text"
+                  name="artist"
+                  id="artist"
+                  placeholder="Artist Name (optional)"
+                />
+              </div>
+            </div>
+            <div class="ui primary submit button">
+              Submit
+            </div>
+            <div class="ui error message"></div>
+          </form>
+        </div>
+        <hr />
+      </script>
+
       <!-- Lyrics Template -->
-      <script id="lyrics-template" type="text/x-handlebars-template">
+      <script id="lyrics-player-template" type="text/x-handlebars-template">
         <h1 class="ui header">
           Lyrics
         </h1>
-          <div class="ui basic segment" id="lyrics-page">
-            <form class="ui form">
-              <div class="two fields">
-                <div class="field">
-                  <label>Song</label>
-                  <input type="text" name="song" id="song" placeholder="Song Name">
-                </div>
-                <div class="field">
-                  <label>Artist</label>
-                  <input type="text" name="artist" id="artist" placeholder="Artist Name (optional)">
-                </div>
-              </div>
-              <div class="ui primary submit button">Submit</div>
-              <div class="ui error message"></div>
-            </form>
-            <div class="ui horizontal list">
-              <div class="item">
-                <span>{{name}}</span>
-              </div>
-              <div class="item">
-                <span>{{author}}</span>
-              </div>
-              <div class="item">
-                <span>{{album}}</span>
-              </div>
+        <div class="ui basic segment" id="lyrics-player">
+          <div class="ui horizontal list">
+            <div class="item">
+              <span>
+                {{name}}
+              </span>
             </div>
-            <div>{{lrc}}</div>
+            <div class="item">
+              <span>
+                {{author}}
+              </span>
+            </div>
+            <div class="item">
+              <span>
+                {{album}}
+              </span>
+            </div>
           </div>
+          <div>
+            {{lrc}}
+          </div>
+        </div>
         <hr />
       </script>
 
@@ -96,7 +130,7 @@
       </script> -->
 
       <div id="app"></div>
-
+      <div id="player"></div>
     </div>
   </body>
 </html>
