@@ -1,10 +1,15 @@
 window.addEventListener("load", () => {
   const el = $("#app");
-  const player = $('#player');
+  const player = $("#player");
 
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-template").html());
-  const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-template").html());
+  const errorMsgTemplate = Handlebars.compile(
+    $("#error-message-template").html()
+  );
+  const lyricsFormTemplate = Handlebars.compile(
+    $("#lyrics-form-template").html()
+  );
   const lyricsTemplate = Handlebars.compile($("#lyrics-template").html());
   const loginTemplate = Handlebars.compile($("#login-template").html());
 
@@ -24,24 +29,33 @@ window.addEventListener("load", () => {
   // Instantiate api handler
   const api = axios.create({
     baseURL: `${window.location.protocol}//${window.location.host}/api`,
-    timeout: 5000,
+    timeout: 12000,
   });
 
   // Display Error Banner
   const showError = (error) => {
-    const { title, message } = error.response.data;
-    const html = errorTemplate({ color: 'red', title, message });
-    player.html(html);
+    if (error.response == undefined && error.message) {
+      const title = "Code error";
+      const message = error.message;
+      const html = errorMsgTemplate({ title, message });
+      player.html(html);
+      $(".message .close").on("click", function () {
+        $(this).closest(".message").transition("fade");
+      });
+    } else {
+      const { title, message } = error.response.data;
+      const html = errorTemplate({ color: "red", title, message });
+      player.html(html);
+    }
     console.log(error);
-    
   };
 
- // read song and artist from form (for now) and ask api for lyrics,
- // then update the handlebar template
+  // read song and artist from form (for now) and ask api for lyrics,
+  // then update the handlebar template
   const getLyricsResults = async () => {
     // get params from web form
-    const song = $('#song').val();
-    const artist = $('#artist').val();
+    const song = $("#song").val();
+    const artist = $("#artist").val();
     // send post data for lyrics
     try {
       const response = await api.post('/lyrics', { song, artist });
@@ -51,21 +65,21 @@ window.addEventListener("load", () => {
     } catch (error) {
       showError(error);
     } finally {
-      $('.loading').removeClass('loading');
-      $('#lyrics-1').addClass('rabbit-lyrics');
+      $(".loading").removeClass("loading");
+      $("#lyrics-1").addClass("rabbit-lyrics");
       document.dispatchEvent(new Event("DOMContentLoaded"));
     }
-  }
+  };
 
   // Handle Convert Button Click Event
   const getLyricsHandler = () => {
-    console.log('get lyrics clicked');
-    
-    if ($('.ui.form').form('is valid')) {
+    console.log("get lyrics clicked");
+
+    if ($(".ui.form").form("is valid")) {
       // hide error message
-      $('.ui.error.message').hide();
+      $(".ui.error.message").hide();
       // Post to Express server
-      $('#lyrics-form').addClass('loading');
+      $("#lyrics-form").addClass("loading");
       $("#lyrics-header").addClass("loading");
       $("#lyrics-1").addClass("loading");
       getLyricsResults();
@@ -80,18 +94,17 @@ window.addEventListener("load", () => {
     el.html(html);
     try {
       // Validate Form Inputs
-      $('.ui.form').form({
+      $(".ui.form").form({
         fields: {
-          song: 'empty',
+          song: "empty",
         },
       });
       // Specify Submit Handler
-      $('.submit').click(getLyricsHandler);
+      $(".submit").click(getLyricsHandler);
     } catch (error) {
       showError(error);
     }
   });
-
 
   // spotify login page
 
@@ -100,10 +113,10 @@ window.addEventListener("load", () => {
     el.html(html);
   });
 
-//   router.add("/historical", () => {
-//     let html = historicalTemplate();
-//     el.html(html);
-//   });
+  //   router.add("/historical", () => {
+  //     let html = historicalTemplate();
+  //     el.html(html);
+  //   });
 
   // Navigate app to current url
   router.navigateTo(window.location.pathname);
@@ -127,3 +140,17 @@ window.addEventListener("load", () => {
     router.navigateTo(path);
   });
 });
+
+/**
+ * Sync time
+b = $('#audio-1');
+b[0].currentTime = 5;
+b[0].play();
+ */
+
+/**
+        err = {
+        response: { data: { title: "test Title", message: "test message" } },
+      };
+      showError(err);
+  */
