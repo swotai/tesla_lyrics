@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "jquery": "^3.5.1",
+    "rabbit-lyrics": "^1.3.0",
     "semantic-ui-css": "^2.4.1",
     "vanilla-router": "^1.2.8",
     "zh_cn_zh_tw": "^1.0.7"

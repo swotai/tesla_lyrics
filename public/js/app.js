@@ -1,11 +1,11 @@
 window.addEventListener("load", () => {
   const el = $("#app");
-  const player = $('#player')
+  const player = $('#player');
 
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-template").html());
   const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-template").html());
-  const lyricsPlayerTemplate = Handlebars.compile($("#lyrics-player-template").html());
+  const lyricsTemplate = Handlebars.compile($("#lyrics-template").html());
   const loginTemplate = Handlebars.compile($("#login-template").html());
 
   // Router Declaration
@@ -31,7 +31,9 @@ window.addEventListener("load", () => {
   const showError = (error) => {
     const { title, message } = error.response.data;
     const html = errorTemplate({ color: 'red', title, message });
-    el.html(html);
+    player.html(html);
+    console.log(error);
+    
   };
 
  // read song and artist from form (for now) and ask api for lyrics,
@@ -44,12 +46,14 @@ window.addEventListener("load", () => {
     try {
       const response = await api.post('/lyrics', { song, artist });
       const { name, author, album, lrc } = response.data;
-      let html = lyricsPlayerTemplate({ name, author, album, lrc });
+      let html = lyricsTemplate({ name, author, album, lrc });
       player.html(html);
     } catch (error) {
-      showError(error)
+      showError(error);
     } finally {
       $('.loading').removeClass('loading');
+      $('#lyrics-1').addClass('rabbit-lyrics');
+      document.dispatchEvent(new Event("DOMContentLoaded"));
     }
   }
 
@@ -62,7 +66,8 @@ window.addEventListener("load", () => {
       $('.ui.error.message').hide();
       // Post to Express server
       $('#lyrics-form').addClass('loading');
-      $('#lyrics-player').addClass('loading');
+      $("#lyrics-header").addClass("loading");
+      $("#lyrics-1").addClass("loading");
       getLyricsResults();
       // Prevent page from submitting to server
       return false;
@@ -83,7 +88,7 @@ window.addEventListener("load", () => {
       // Specify Submit Handler
       $('.submit').click(getLyricsHandler);
     } catch (error) {
-      showError(error)
+      showError(error);
     }
   });
 
