@@ -54,7 +54,7 @@ app.listen(port, () => {
 });
 
 const fs = require('fs');
-const test = () => {
+const testLyrics = () => {
     const { getLyrics, getLyrics1, getLyrics2 } = require("./lib/guaqb-service");
 
     // var data = await getLyrics1('洋蔥');
@@ -74,4 +74,4 @@ const test = () => {
     
 };
 
-// test();
+// testLyrics();
