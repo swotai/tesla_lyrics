@@ -2,10 +2,24 @@
 require('dotenv').config(); // read .env files
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieSession = require("cookie-session");
+const passport = require("./lib/spotify-service").passport;
 
 const app = express();
 const port = process.env.PORT || 8000;
 const isDebug = false;
+
+// cookieSession config
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
+    name: "test",
+    keys: ["randomstringhere"],
+  })
+);
+
+app.use(passport.initialize()); // Used to initialize passport
+app.use(passport.session()); // Used to persist login sessions
 
 // Set public folder as root
 app.use(express.static('public'));
@@ -34,8 +48,9 @@ const errorHandler = (err, req, res) => {
     }
 };
 
-// Lyrics service endpoints
+// service routes
 app.use("/lyrics_svc", require("./lib/guaqb-service").lyrics_router);
+app.use("/spotify", require("./lib/spotify-service").spotify_router)
 
 // Redirect all traffic to index.html
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));

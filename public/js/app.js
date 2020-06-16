@@ -29,7 +29,7 @@ window.addEventListener("load", () => {
 
   // Instantiate api handler
   const api = axios.create({
-    baseURL: `${window.location.protocol}//${window.location.host}/lyrics_svc`,
+    baseURL: `${window.location.protocol}//${window.location.host}`,
     timeout: 12000,
   });
 
@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
     const artist = $("#artist").val();
     // send post data for lyrics
     try {
-      const response = await api.post('/lyrics', { song, artist });
+      const response = await api.post("/lyrics_svc/lyrics", { song, artist });
       const { name, author, album, lrc } = response.data;
       let html = lyricsTemplate({ name, author, album, lrc });
       player.html(html);
@@ -90,6 +90,15 @@ window.addEventListener("load", () => {
     return true;
   };
 
+  const testAuthStatus = async () => {
+    try {
+      const response = await api.get("/spotify/secret");
+      console.log(response);      
+    } catch (error) {
+      showError(error);
+    }
+  };
+
   router.add("/", () => {
     let html = lyricsFormTemplate();
     el.html(html);
@@ -101,7 +110,8 @@ window.addEventListener("load", () => {
         },
       });
       // Specify Submit Handler
-      $(".submit").click(getLyricsHandler);
+      $("#findLyricsFromForm").click(getLyricsHandler);
+      $("#testBtn").click(testAuthStatus);
     } catch (error) {
       showError(error);
     }
