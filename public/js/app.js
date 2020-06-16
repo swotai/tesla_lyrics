@@ -2,7 +2,6 @@
 window.addEventListener("load", () => {
   const el = $("#app");
   const player = $("#player");
-  console.log("testloadevent");
 
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-template").html());
@@ -98,13 +97,13 @@ window.addEventListener("load", () => {
       const response = await api.get("/spotify/auth/status");
       console.log(response);
       console.log(response.status);
+      console.log(response.data.isLoggedIn);
     } catch (error) {
       showError(error);
       console.log(error.response.data.title);
     }
   };
   $("#testBtn").click(testAuthStatus);
-
 
   router.add("/", () => {
     let html = lyricsFormTemplate();
@@ -123,20 +122,36 @@ window.addEventListener("load", () => {
     }
   });
 
-  // spotify link
+  // spotify login
+  const spotifyLogout = async () => {
+    try {
+      await api.get("/spotify/logout");
+    } catch (error) {
+      showError(error);
+    } finally {
+      router.navigateTo("/login");
+    }
+  };
 
-  Handlebars.registerHelper("isSpotifyAuth", async () => {
+  router.add("/login", async () => {
+    let isSpotifyAuth = false;
+    let userName = "";
+    let html = loginTemplate({ isSpotifyAuth });
+    el.html(html);
     try {
       const response = await api.get("/spotify/auth/status");
-      return response.status == 200;
+      ({isSpotifyAuth, userName} = response.data);
     } catch (error) {
-      return false;
+      isSpotifyAuth = false;
+    } finally {
+      let html = loginTemplate({ isSpotifyAuth, userName });
+      el.html(html);
+      $("#spotifyLoginBtn").click(() => {
+        window.location.href = "/spotify/auth";
+      });
+      $("#spotifyLogoutBtn").click(spotifyLogout);
+      $(".loading").removeClass("loading");
     }
-  });
-
-  router.add("/login", () => {
-    let html = loginTemplate();
-    el.html(html);
   });
 
   // Navigate app to current url
