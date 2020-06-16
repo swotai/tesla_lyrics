@@ -1,10 +1,11 @@
+// Router logic
 require('dotenv').config(); // read .env files
 const express = require('express');
 const bodyParser = require('body-parser');
-const { getLyrics } = require("./lib/guaqb-service");
 
 const app = express();
 const port = process.env.PORT || 8000;
+const isDebug = false;
 
 // Set public folder as root
 app.use(express.static('public'));
@@ -33,17 +34,8 @@ const errorHandler = (err, req, res) => {
     }
 };
 
-// fetch lyrics
-app.post('/api/lyrics', async (req, res) => {
-    try {
-        const { song, artist } = req.body;
-        const data = await getLyrics(song, artist);
-        res.setHeader('Content-Type', 'application/json')
-        res.send(data[0])
-    } catch (err) {
-        errorHandler(err, req, res);
-    }
-});
+// Lyrics service endpoints
+app.use("/lyrics_svc", require("./lib/guaqb-service").lyrics_router);
 
 // Redirect all traffic to index.html
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
@@ -53,9 +45,15 @@ app.listen(port, () => {
     console.log('listening on %d', port);
 });
 
-const fs = require('fs');
-const testLyrics = () => {
-    const { getLyrics, getLyrics1, getLyrics2 } = require("./lib/guaqb-service");
+
+if (isDebug) {
+  const fs = require("fs");
+  const testLyrics = () => {
+    const {
+      getLyrics,
+      getLyrics1,
+      getLyrics2,
+    } = require("./lib/guaqb-service");
 
     // var data = await getLyrics1('洋蔥');
     // console.log(data);
@@ -63,15 +61,15 @@ const testLyrics = () => {
     // var data2 = await getLyrics2();
     // console.log(data2);s
     // console.log('>>>>>>>>>>>>>>>>>>>');
-    getLyrics('有一種悲傷', 'A-Lin')
-    .then(d => {
-        console.log(typeof(d));
+    getLyrics("有一種悲傷", "A-Lin")
+      .then((d) => {
+        console.log(typeof d);
         console.log(d);
-    })
-    .catch(err => {
-        console.error(err);        
-    });
-    
-};
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-// testLyrics();
+  testLyrics();
+}

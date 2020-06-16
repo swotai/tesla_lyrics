@@ -1,3 +1,4 @@
+// Interface logic
 window.addEventListener("load", () => {
   const el = $("#app");
   const player = $("#player");
@@ -28,7 +29,7 @@ window.addEventListener("load", () => {
 
   // Instantiate api handler
   const api = axios.create({
-    baseURL: `${window.location.protocol}//${window.location.host}/api`,
+    baseURL: `${window.location.protocol}//${window.location.host}/lyrics_svc`,
     timeout: 12000,
   });
 
