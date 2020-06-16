@@ -13,8 +13,8 @@ const isDebug = false;
 app.use(
   cookieSession({
     maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
-    name: "test",
-    keys: ["randomstringhere"],
+    name: "tesla_lyrics",
+    keys: ["02181983"],
   })
 );
 
