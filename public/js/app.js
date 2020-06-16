@@ -2,6 +2,7 @@
 window.addEventListener("load", () => {
   const el = $("#app");
   const player = $("#player");
+  console.log("testloadevent");
 
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-template").html());
@@ -32,6 +33,8 @@ window.addEventListener("load", () => {
     baseURL: `${window.location.protocol}//${window.location.host}`,
     timeout: 12000,
   });
+
+  // menu bar status
 
   // Display Error Banner
   const showError = (error) => {
@@ -92,12 +95,16 @@ window.addEventListener("load", () => {
 
   const testAuthStatus = async () => {
     try {
-      const response = await api.get("/spotify/secret");
-      console.log(response);      
+      const response = await api.get("/spotify/auth/status");
+      console.log(response);
+      console.log(response.status);
     } catch (error) {
       showError(error);
+      console.log(error.response.data.title);
     }
   };
+  $("#testBtn").click(testAuthStatus);
+
 
   router.add("/", () => {
     let html = lyricsFormTemplate();
@@ -111,23 +118,26 @@ window.addEventListener("load", () => {
       });
       // Specify Submit Handler
       $("#findLyricsFromForm").click(getLyricsHandler);
-      $("#testBtn").click(testAuthStatus);
     } catch (error) {
       showError(error);
     }
   });
 
-  // spotify login page
+  // spotify link
+
+  Handlebars.registerHelper("isSpotifyAuth", async () => {
+    try {
+      const response = await api.get("/spotify/auth/status");
+      return response.status == 200;
+    } catch (error) {
+      return false;
+    }
+  });
 
   router.add("/login", () => {
     let html = loginTemplate();
     el.html(html);
   });
-
-  //   router.add("/historical", () => {
-  //     let html = historicalTemplate();
-  //     el.html(html);
-  //   });
 
   // Navigate app to current url
   router.navigateTo(window.location.pathname);
