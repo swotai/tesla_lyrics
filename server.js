@@ -45,12 +45,10 @@ const errorHandler = (err, req, res) => {
       .send({ title: "Server responded with an error", message: err.message });
   } else if (err.request) {
     // The request was made but no response was received
-    res
-      .status(503)
-      .send({
-        title: "Unable to communicate with server",
-        message: err.message,
-      });
+    res.status(503).send({
+      title: "Unable to communicate with server",
+      message: err.message,
+    });
   } else {
     // Something happened in setting up the request that triggered an Error
     res
