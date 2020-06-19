@@ -1,11 +1,21 @@
-window.addEventListener("load", () => {});
-
 /**
- * Updates sidebar based on inList
- * @param {object} inList 
+ * Updates table based on inList
+ * @param {object} inList
  */
-const updateChooser = (inList) => {
+const updateSongTable = (inList) => {
+  let tbl = $("#songTable > tbody");
+  // clear table
+  tbl.html("");
+  if (songList == undefined) {
+    console.log("There's no songList, try to update");
     return null;
+  } else {
+    songList.forEach((element) => {
+      tbl.append(
+        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name}-${element.author}</a></td></tr>`
+      );
+    });
+  }
 };
 
 /**
@@ -13,10 +23,10 @@ const updateChooser = (inList) => {
  * @param {object} inList
  * @param {string} songid
  */
-const selectLyrics = (inList, songid) => {
+const filterLyrics = (inList, songid) => {
   try {
     let selected = inList.filter((item) => {
-      return item.songid == songid;
+      return item.songid == songid.toString();
     });
     return selected[0];
   } catch (error) {
@@ -32,10 +42,21 @@ const updatePlayer = (lrc) => {
   // update the lyrics display with right lyrics
   $("#lyrics-1").html(lrc);
   // trigger rabbit lyrics
-  new RabbitLyrics.default({
+  $("#lyrics-1").removeClass();
+  rabbit = new RabbitLyrics.default({
     element: $("#lyrics-1")[0],
     mediaElement: $("#audio-1")[0],
   });
+};
+
+/**
+ * Wrapper for the two steps
+ * @param {object} inList 
+ * @param {string} songid 
+ */
+const selectLyrics = (inList, songid) => {
+  let song = filterLyrics(inList, songid);
+  updatePlayer(song.lrc);
 };
 
 // TESTING CODES
@@ -58,6 +79,12 @@ const updateSongList = () => {
 };
 
 const test = () => {
-  var a = selectLyrics(songList,299981);
+  updateSongList();
+  var a = filterLyrics(songList, "299981");
   updatePlayer(a.lrc);
+  updateSongTable(songList);
 };
+
+window.addEventListener("load", () => {
+  test();
+});
