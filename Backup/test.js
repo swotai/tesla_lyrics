@@ -42,17 +42,23 @@ const updatePlayer = (lrc) => {
   // update the lyrics display with right lyrics
   $("#lyrics-1").html(lrc);
   // trigger rabbit lyrics
-  $("#lyrics-1").removeClass();
-  rabbit = new RabbitLyrics.default({
-    element: $("#lyrics-1")[0],
-    mediaElement: $("#audio-1")[0],
-  });
+  if ($("#lyrics-1").hasClass("rabbit-lyrics--enabled")) {
+    rabbit.parseLyrics();
+    rabbit.synchronize();
+  } else {
+    rabbit = new RabbitLyrics.default({
+      element: $("#lyrics-1")[0],
+      mediaElement: $("#audio-1")[0],
+      viewMode: "mini",
+      alignment: "center"
+    });
+  }
 };
 
 /**
  * Wrapper for the two steps
- * @param {object} inList 
- * @param {string} songid 
+ * @param {object} inList
+ * @param {string} songid
  */
 const selectLyrics = (inList, songid) => {
   let song = filterLyrics(inList, songid);
@@ -80,7 +86,7 @@ const updateSongList = () => {
 
 const test = () => {
   updateSongList();
-  var a = filterLyrics(songList, "299981");
+  var a = filterLyrics(songList, "27591608");
   updatePlayer(a.lrc);
   updateSongTable(songList);
 };
