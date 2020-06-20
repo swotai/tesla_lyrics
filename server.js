@@ -25,6 +25,7 @@ app.use(passport.session()); // Used to persist login sessions
 
 // Set public folder as root
 app.use(express.static("public"));
+// app.use(express.static("Backup"));
 
 // Allow front-end access to node_modules folder
 app.use("/scripts", express.static(`${__dirname}/node_modules/`));
