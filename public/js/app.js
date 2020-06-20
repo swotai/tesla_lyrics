@@ -39,6 +39,9 @@ const filterLyrics = (inList, songid) => {
  * @param {string} lrc
  */
 const updatePlayer = (lrc) => {
+  // brutally remove then rebuild?
+  $("#lyrics-1").remove();
+  $("#lyrics-container").append("<div id='lyrics-1'></div>");
   // update the lyrics display with right lyrics
   $("#lyrics-1").html(lrc);
   // trigger rabbit lyrics
@@ -51,6 +54,7 @@ const updatePlayer = (lrc) => {
       mediaElement: $("#audio-1")[0],
       viewMode: "default",
       alignment: "center",
+      height: 600,
     });
   }
 };
@@ -140,6 +144,7 @@ window.addEventListener("load", () => {
         let audioPlayer = $("#audio-1")[0];
         audioPlayer.currentTime = player.progress_ms / 1000;
         audioPlayer.play();
+        $("#spotifyInfo").html(`${player.name} - ${player.artist}`);
         // get lyrics
         const lyricsResults = await api.post("/lyrics_svc/lyrics", {
           song: player.name,

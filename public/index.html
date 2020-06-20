@@ -9,6 +9,10 @@
     <script src="scripts/rabbit-lyrics/dist/rabbit-lyrics.js"></script>
     <script src="js/app.js"></script>
     <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
+    /> -->
     <link rel="stylesheet" href="style.css" />
   </header>
 
@@ -116,6 +120,8 @@
               <audio id="audio-1" controls>
                 <source src="timer.ogg" type="audio/ogg" />
               </audio>
+              <br />
+              <div id="spotifyInfo"></div>
             </div>
           </div>
 
@@ -142,7 +148,7 @@
             </div>
             <div class="ui segment twelve wide column">
               <div class="ui segment">
-                <div class="lyrics-container">
+                <div id="lyrics-container">
                   <div id="lyrics-1">
                     Refresh spotify to load songs
                   </div>
