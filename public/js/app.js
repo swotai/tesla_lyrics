@@ -150,6 +150,10 @@ window.addEventListener("load", () => {
         console.log(match);
         // update table
         updateSongTable(songList);
+        // if there's match, update lyrics
+        if (match) {
+          selectLyrics(songList, match);
+        }
       } else {
         return false;
       }
