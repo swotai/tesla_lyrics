@@ -1,18 +1,82 @@
+/**
+ * Updates table based on inList
+ * @param {object} inList
+ */
+const updateSongTable = (inList) => {
+  let tbl = $("#songTable > tbody");
+  // clear table
+  tbl.html("");
+  if (songList == undefined) {
+    console.log("There's no songList, try to update");
+    return null;
+  } else {
+    songList.forEach((element) => {
+      tbl.append(
+        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name} - ${element.author}</a></td></tr>`
+      );
+    });
+  }
+};
+
+/**
+ * Return selected lrc based on songid
+ * @param {object} inList
+ * @param {string} songid
+ */
+const filterLyrics = (inList, songid) => {
+  try {
+    let selected = inList.filter((item) => {
+      return item.songid == songid.toString();
+    });
+    return selected[0];
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * update player section
+ * @param {string} lrc
+ */
+const updatePlayer = (lrc) => {
+  // update the lyrics display with right lyrics
+  $("#lyrics-1").html(lrc);
+  // trigger rabbit lyrics
+  if ($("#lyrics-1").hasClass("rabbit-lyrics--enabled")) {
+    rabbit.parseLyrics();
+    rabbit.synchronize();
+  } else {
+    rabbit = new RabbitLyrics.default({
+      element: $("#lyrics-1")[0],
+      mediaElement: $("#audio-1")[0],
+      viewMode: "default",
+      alignment: "center",
+    });
+  }
+};
+
+/**
+ * Wrapper for the two steps
+ * @param {object} inList
+ * @param {string} songid
+ */
+const selectLyrics = (inList, songid) => {
+  let song = filterLyrics(inList, songid);
+  updatePlayer(song.lrc);
+};
+
 // Interface logic
 window.addEventListener("load", () => {
-  const el = $("#app");
-  const player = $("#player");
+  const app = $("#app");
+  const debug = $("#debug");
+  const err = $("#errorMsg");
 
   // Compile Handlebar Templates
-  const errorTemplate = Handlebars.compile($("#error-template").html());
-  const errorMsgTemplate = Handlebars.compile(
-    $("#error-message-template").html()
-  );
-  const lyricsFormTemplate = Handlebars.compile(
-    $("#lyrics-form-template").html()
-  );
-  const lyricsTemplate = Handlebars.compile($("#lyrics-template").html());
-  const loginTemplate = Handlebars.compile($("#login-template").html());
+  const errorTemplate = Handlebars.compile($("#error-tmp").html());
+  const errorMsgTemplate = Handlebars.compile($("#error-message-tmp").html());
+  const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-tmp").html());
+  const lyricsTemplate = Handlebars.compile($("#lyrics-tmp").html());
+  const loginTemplate = Handlebars.compile($("#login-tmp").html());
 
   // Router Declaration
   const router = new Router({
@@ -23,7 +87,7 @@ window.addEventListener("load", () => {
         title: "Error 404 - Page NOT Found!",
         message: `The path '/${path}' does not exist on this site`,
       });
-      el.html(html);
+      app.html(html);
     },
   });
 
@@ -33,38 +97,95 @@ window.addEventListener("load", () => {
     timeout: 12000,
   });
 
-  // menu bar status
-
-  // Display Error Banner
-  const showError = (error) => {
-    if (error.response == undefined && error.message) {
-      const title = "Code error";
-      const message = error.message;
-      const html = errorMsgTemplate({ title, message });
-      player.html(html);
-      $(".message .close").on("click", function () {
-        $(this).closest(".message").transition("fade");
+  router.add("/login", async () => {
+    let isSpotifyAuth = false;
+    let userName = "";
+    let html = loginTemplate({ isSpotifyAuth });
+    app.html(html);
+    err.html("");
+    try {
+      const response = await api.get("/spotify/auth/status");
+      ({ isSpotifyAuth, userName } = response.data);
+    } catch (error) {
+      isSpotifyAuth = false;
+    } finally {
+      let html = loginTemplate({
+        isSpotifyAuth,
+        userName,
       });
-    } else {
-      const { title, message } = error.response.data;
-      const html = errorTemplate({ color: "red", title, message });
-      player.html(html);
+      app.html(html);
+      $("#spotifyLoginBtn").click(() => {
+        window.location.href = "/spotify/auth";
+      });
+      $("#spotifyLogoutBtn").click(spotifyLogout);
+      $(".loading").removeClass("loading");
     }
-    console.log(error);
+  });
+
+  // main lyrics page
+
+  /**
+   * Handler for the Sync Spotify button
+   * 1) update audio player with Spotify time
+   * 2) get lyrics and update list
+   * 3) If there's a match (seem rare) then auto select
+   */
+  const refreshLyricsFromSpotify = async () => {
+    $("#syncSpotifyBtn").addClass("loading");
+    try {
+      const spotifyPlayer = await api.get("/spotify/player");
+      let player = spotifyPlayer.data;
+      if (player.is_playing) {
+        // update audio player and start playing
+        let audioPlayer = $("#audio-1")[0];
+        audioPlayer.currentTime = player.progress_ms / 1000;
+        audioPlayer.play();
+        // get lyrics
+        const lyricsResults = await api.post("/lyrics_svc/lyrics", {
+          song: player.name,
+          artist: player.artist,
+        });
+        songList = lyricsResults.data.data;
+        var match = lyricsResults.data.match;
+        console.log(match);
+        // update table
+        updateSongTable(songList);
+      } else {
+        return false;
+      }
+    } catch (error) {
+      showError(error);
+    } finally {
+      $(".loading").removeClass("loading");
+    }
   };
 
+  router.add("/", async () => {
+    let html = lyricsTemplate();
+    app.html(html);
+    err.html("");
+    $("#syncSpotifyBtn").click(refreshLyricsFromSpotify);
+  });
+
+  // DEBUGGING
   // read song and artist from form (for now) and ask api for lyrics,
   // then update the handlebar template
-  const getLyricsResults = async () => {
+  const getLyricsResultsDebug = async () => {
     // get params from web form
     const song = $("#song").val();
     const artist = $("#artist").val();
+    err.html("");
     // send post data for lyrics
     try {
       const response = await api.post("/lyrics_svc/lyrics", { song, artist });
-      const { name, author, album, lrc } = response.data;
-      let html = lyricsTemplate({ name, author, album, lrc });
-      player.html(html);
+      const { name, author, album, lrc } = response.data[0];
+      let html = lyricsTemplate({
+        name,
+        author,
+        album,
+        lrc,
+      });
+      app.html(html);
     } catch (error) {
       showError(error);
     } finally {
@@ -75,7 +196,7 @@ window.addEventListener("load", () => {
   };
 
   // Handle Convert Button Click Event
-  const getLyricsHandler = () => {
+  const getLyricsHandlerDebug = () => {
     console.log("get lyrics clicked");
 
     if ($(".ui.form").form("is valid")) {
@@ -85,29 +206,16 @@ window.addEventListener("load", () => {
       $("#lyrics-form").addClass("loading");
       $("#lyrics-header").addClass("loading");
       $("#lyrics-1").addClass("loading");
-      getLyricsResults();
+      getLyricsResultsDebug();
       // Prevent page from submitting to server
       return false;
     }
     return true;
   };
 
-  const testAuthStatus = async () => {
-    try {
-      const response = await api.get("/spotify/auth/status");
-      console.log(response);
-      console.log(response.status);
-      console.log(response.data.isLoggedIn);
-    } catch (error) {
-      showError(error);
-      console.log(error.response.data.title);
-    }
-  };
-  $("#testBtn").click(testAuthStatus);
-
-  router.add("/", () => {
+  router.add("/debug", () => {
     let html = lyricsFormTemplate();
-    el.html(html);
+    err.html(html);
     try {
       // Validate Form Inputs
       $(".ui.form").form({
@@ -116,41 +224,9 @@ window.addEventListener("load", () => {
         },
       });
       // Specify Submit Handler
-      $("#findLyricsFromForm").click(getLyricsHandler);
+      $("#findLyricsFromForm").click(getLyricsHandlerDebug);
     } catch (error) {
       showError(error);
-    }
-  });
-
-  // spotify login
-  const spotifyLogout = async () => {
-    try {
-      await api.get("/spotify/logout");
-    } catch (error) {
-      showError(error);
-    } finally {
-      router.navigateTo("/login");
-    }
-  };
-
-  router.add("/login", async () => {
-    let isSpotifyAuth = false;
-    let userName = "";
-    let html = loginTemplate({ isSpotifyAuth });
-    el.html(html);
-    try {
-      const response = await api.get("/spotify/auth/status");
-      ({isSpotifyAuth, userName} = response.data);
-    } catch (error) {
-      isSpotifyAuth = false;
-    } finally {
-      let html = loginTemplate({ isSpotifyAuth, userName });
-      el.html(html);
-      $("#spotifyLoginBtn").click(() => {
-        window.location.href = "/spotify/auth";
-      });
-      $("#spotifyLogoutBtn").click(spotifyLogout);
-      $(".loading").removeClass("loading");
     }
   });
 

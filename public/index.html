@@ -6,15 +6,16 @@
     <script src="scripts/handlebars/dist/handlebars.min.js"></script>
     <script src="scripts/semantic-ui-css/semantic.min.js"></script>
     <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
+    <script src="scripts/rabbit-lyrics/dist/rabbit-lyrics.js"></script>
     <script src="js/app.js"></script>
-    <link href="scripts/semantic-ui-css/semantic.min.css" rel="stylesheet" />
-    <link href="style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css" />
+    <link rel="stylesheet" href="style.css" />
   </header>
 
   <body>
     <div class="ui container" id="main-app">
       <!-- Nav menu -->
-      <div class="ui two item inverted green menu" id="navHeader">
+      <div class="ui three item inverted green menu" id="navHeader">
         <a class="item" href="/">
           <i class="headphones icon"></i>
           <i class="closed Captioning icon"></i>
@@ -24,10 +25,14 @@
           <i class="spotify icon"></i>
           Login
         </a>
+        <a class="item" href="/debug">
+          <i class="stethoscope icon"></i>
+          Debug form
+        </a>
       </div>
 
       <!-- Error template -->
-      <script id="error-template" type="text/x-handlebars-template">
+      <script id="error-tmp" type="text/x-handlebars-template">
         <div class="ui {{color}} inverted segment" style="height:250px;">
           <h2 class="ui center aligned icon header">
             <i class="exclamation triangle icon"></i>
@@ -42,7 +47,7 @@
       </script>
 
       <!-- Error message template -->
-      <script id="error-message-template" type="text/x-handlebars-template">
+      <script id="error-message-tmp" type="text/x-handlebars-template">
         <div class="ui negative message">
           <i class="close icon"></i>
           <div class="header">
@@ -53,7 +58,7 @@
       </script>
 
       <!-- Lyrics form Template -->
-      <script id="lyrics-form-template" type="text/x-handlebars-template">
+      <script id="lyrics-form-tmp" type="text/x-handlebars-template">
         <h1 class="ui header">
           Lyrics form
         </h1>
@@ -93,39 +98,69 @@
       </script>
 
       <!-- Lyrics Template -->
-      <script id="lyrics-template" type="text/x-handlebars-template">
+      <script id="lyrics-tmp" type="text/x-handlebars-template">
         <h1 class="ui header">
           Lyrics
         </h1>
-        <audio id="audio-1" controls>
-          <source src="timer.wav" type="audio/wav" />
-        </audio>
-        <div class="ui basic segment" id="lyrics-header">
-          <div class="ui horizontal list">
-            <div class="item">
-              <span>
-                {{name}}
-              </span>
+
+        <div class="ui grid container" id="main-app">
+          <div class="row">
+            <div class="ui four wide column" style="text-align: center;">
+              <div style="display: inline-block;">
+                <button class="massive ui button" id="syncSpotifyBtn">
+                  Sync Spotify
+                </button>
+              </div>
             </div>
-            <div class="item">
-              <span>
-                {{author}}
-              </span>
-            </div>
-            <div class="item">
-              <span>
-                {{album}}
-              </span>
+            <div class="ui six wide column">
+              <audio id="audio-1" controls>
+                <source src="timer.ogg" type="audio/ogg" />
+              </audio>
             </div>
           </div>
-        </div>
-        <div id="lyrics-1" data-alignment="center">
-          {{lrc}}
+
+          <div class="row">
+            <div class="ui segment four wide column">
+              <table class="ui celled table" id="songTable">
+                <thead>
+                  <tr>
+                    <th>
+                      Lyrics List
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="selectable">
+                      <a href="#">
+                        No results
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="ui segment twelve wide column">
+              <div class="ui segment">
+                <div id="lyrics-1">
+                  Refresh spotify to load songs
+                </div>
+              </div>
+            </div>
+            <div class="ui two wide column"></div>
+          </div>
         </div>
       </script>
 
+      <!-- Lyrics List Template -->
+      <script id="lyrics-list-tmp" type="text/x-handlebars-template">
+        <h3 class="ui header">
+          Other results
+        </h3>
+      </script>
+
       <!-- Login Template -->
-      <script id="login-template" type="text/x-handlebars-template">
+      <script id="login-tmp" type="text/x-handlebars-template">
         <div class="loading">
           <h1 class="ui header">
             Login to Spotify
@@ -148,17 +183,10 @@
           {{/if}}
         </div>
       </script>
-
+      <div id="errorMsg"></div>
       <div id="app"></div>
-      <div id="player"></div>
-      <div id="test" style="display: none;">
-        testibg
-        <div class="ui primary submit button" id="testBtn">
-          test
-        </div>
-      </div>
+      <div id="debug"></div>
     </div>
-    <script src="scripts/rabbit-lyrics/dist/rabbit-lyrics.js"></script>
   </body>
 </html>
 
