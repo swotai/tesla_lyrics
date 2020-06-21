@@ -54,7 +54,7 @@ const updatePlayer = (lrc) => {
       mediaElement: $("#audio-1")[0],
       viewMode: "default",
       alignment: "center",
-      height: 600,
+      height: 380,
     });
   }
 };
@@ -121,7 +121,9 @@ window.addEventListener("load", () => {
       $("#spotifyLoginBtn").click(() => {
         window.location.href = "/spotify/auth";
       });
-      $("#spotifyLogoutBtn").click(spotifyLogout);
+      $("#spotifyLogoutBtn").click(() => {
+        window.location.href = "/spotify/logout";
+      });
       $(".loading").removeClass("loading");
     }
   });
@@ -138,7 +140,7 @@ window.addEventListener("load", () => {
     $("#syncSpotifyBtn").addClass("loading");
     try {
       const spotifyPlayer = await api.get("/spotify/player");
-      let player = spotifyPlayer.data;
+      player = spotifyPlayer.data;
       if (player.is_playing) {
         // update audio player and start playing
         let audioPlayer = $("#audio-1")[0];
@@ -176,6 +178,14 @@ window.addEventListener("load", () => {
     $("#syncSpotifyBtn").click(refreshLyricsFromSpotify);
   });
 
+  // Auto reload: wait for the player time pass the duration, then trigger refresh
+  // a = document.getElementById("audio-1");
+  // const b = () => {
+  //   let time = document.getElementById("audio-1").currentTime;
+  //   console.log(time);
+  // };
+  // a.addEventListener("timeupdate", b);
+  
   // DEBUGGING
   // read song and artist from form (for now) and ask api for lyrics,
   // then update the handlebar template
