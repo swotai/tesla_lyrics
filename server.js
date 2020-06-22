@@ -2,6 +2,7 @@
 
 // Router logic
 require("dotenv").config(); // read .env files
+const compression = require("compression");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -22,6 +23,7 @@ app.use(
 
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
+app.use(compression());
 
 // Set public folder as root
 app.use(express.static("public"));
