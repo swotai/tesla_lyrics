@@ -1,7 +1,7 @@
 "use strict";
 
 // Router logic
-require("dotenv").config(); // read .env files
+require("dotenv-safe").config(); // read .env files
 const compression = require("compression");
 const express = require("express");
 const bodyParser = require("body-parser");
