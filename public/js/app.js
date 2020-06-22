@@ -148,9 +148,8 @@ window.addEventListener("load", () => {
         audioPlayer.play();
         $("#spotifyInfo").html(`${player.name} - ${player.artist}`);
         // get lyrics
-        const lyricsResults = await api.post("/lyrics_svc/lyrics", {
-          song: player.name,
-          artist: player.artist,
+        const lyricsResults = await api.get("/lyrics_svc/lyrics", {
+          params: { song: player.name, artist: player.artist },
         });
         songList = lyricsResults.data.data;
         var match = lyricsResults.data.match;
@@ -185,7 +184,7 @@ window.addEventListener("load", () => {
   //   console.log(time);
   // };
   // a.addEventListener("timeupdate", b);
-  
+
   // DEBUGGING
   // read song and artist from form (for now) and ask api for lyrics,
   // then update the handlebar template
