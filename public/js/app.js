@@ -271,16 +271,3 @@ window.addEventListener("load", () => {
   });
 });
 
-/**
- * Sync time
-b = $('#audio-1');
-b[0].currentTime = 5;
-b[0].play();
- */
-
-/**
-        err = {
-        response: { data: { title: "test Title", message: "test message" } },
-      };
-      showError(err);
-  */

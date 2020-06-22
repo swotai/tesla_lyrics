@@ -43,9 +43,10 @@ Why? coz how else can i secure my keys and secrets...
 [Keeping secrets in node.js](https://medium.com/codait/environment-variables-or-keeping-your-secrets-secret-in-a-node-js-app-99019dfff716)
 
 ## Session and Auth
+
 [Tutorial(or see passportJS doc??)](https://blog.usejournal.com/sessionless-authentication-withe-jwts-with-node-express-passport-js-69b059e4b22c#:~:text=The%20difference%20between%20the%20two,encoded%20in%20the%20JWT%20payload.)
 [PassportJS](http://www.passportjs.org/docs/downloads/html/)
 [SQLite](https://healeycodes.com/javascript/webdev/beginners/tutorial/2019/06/03/saving-data-in-javascript-without-a-database.html)
 nodejs return redirect
 > 302 redirect
-resp.write 
+resp.write
