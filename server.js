@@ -2,10 +2,11 @@
 
 // Router logic
 require("dotenv-safe").config(); // read .env files
-const compression = require("compression");
-const express = require("express");
 const bodyParser = require("body-parser");
+const compression = require("compression");
 const cookieSession = require("cookie-session");
+const express = require("express");
+const helmet = require("helmet");
 const passport = require("./lib/spotify-service").passport;
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(
 app.use(passport.initialize()); // Used to initialize passport
 app.use(passport.session()); // Used to persist login sessions
 app.use(compression());
+app.use(helmet());
 
 // Set public folder as root
 app.use(express.static("public"));

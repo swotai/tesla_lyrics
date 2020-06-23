@@ -15,6 +15,10 @@ Simple app to read the spotify status and show some lyrics on the tesla screen
 
 Suggest to mount the `.env` as a bind mount
 
+### Other necessary preparation
+
+[How to get a node/express app production ready](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
+
 ## notes
 
 Inspired from [小明Player](http://music.guaqb.cn/2/)
