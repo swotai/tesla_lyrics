@@ -24,6 +24,8 @@ If deploying to AE, need some special arrangement for the env file [env file in 
 3. Write env vars to a local .env file
 4. Import env vars from .env to your Node.js app using dotenv package
 
+Don't forget to enable the [AE admin API](https://console.developers.google.com/apis/library/appengine.googleapis.com?project=swot-tesla-lyrics)!
+
 ### Other necessary preparation
 
 [How to get a node/express app production ready](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
