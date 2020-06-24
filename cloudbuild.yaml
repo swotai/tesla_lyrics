@@ -1,17 +1,18 @@
 steps:
   - name: node:10.15.1
     entrypoint: npm
-    args: ["install"]
+    args: ["ci"]
   - name: node:10.15.1
     entrypoint: npm
     args: ["run", "create-env"]
     env:
       # app params
       - 'PORT=\${_PORT}'
+      - 'RUNENV=GAE'
       # spotify params
       - 'SPOTIFY_CLIENT_ID=\${_SPOTIFY_CLIENT_ID}'
       - 'SPOTIFY_CLIENT_SECRET=\${_SPOTIFY_CLIENT_SECRET}'
-      - 'SPOTIFY_CALLBACK=\${_SPOTIFY_CALLBACK}'
+      - 'SPOTIFY_CALLBACK=https://swot-tesla-lyrics.wm.r.appspot.com/spotify/callback'
       # guaqb music api params
       - 'GUAQB_KEY=\${_GUAQB_KEY}'
       - 'GUAQB_SECRET=\${_GUAQB_SECRET}'

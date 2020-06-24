@@ -24,7 +24,10 @@ If deploying to AE, need some special arrangement for the env file [env file in 
 3. Write env vars to a local .env file
 4. Import env vars from .env to your Node.js app using dotenv package
 
-Don't forget to enable the [AE admin API](https://console.developers.google.com/apis/library/appengine.googleapis.com?project=swot-tesla-lyrics)!
+Service account permissions
+
+- Enable the [AE admin API](https://console.developers.google.com/apis/library/appengine.googleapis.com?project=swot-tesla-lyrics)
+- configure the cloud build service account permission, [enable app engine admin](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-appengine)
 
 ### Other necessary preparation
 
