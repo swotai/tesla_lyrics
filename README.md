@@ -15,6 +15,13 @@ Simple app to read the spotify status and show some lyrics on the tesla screen
 
 Suggest to mount the `.env` as a bind mount
 
+### Google App Engine
+
+1. Store env vars in Google Cloud’s Build Trigger
+2. Read in env vars from the Build Trigger in one of its build steps
+3. Write env vars to a local .env file
+4. Import env vars from .env to your Node.js app using dotenv package
+
 ### Other necessary preparation
 
 [How to get a node/express app production ready](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
