@@ -7,15 +7,15 @@ steps:
     args: ["run", "create-env"]
     env:
       # app params
-      - 'PORT=\${_PORT}'
+      - 'PORT=${_PORT}'
       - 'RUNENV=GAE'
       # spotify params
-      - 'SPOTIFY_CLIENT_ID=\${_SPOTIFY_CLIENT_ID}'
-      - 'SPOTIFY_CLIENT_SECRET=\${_SPOTIFY_CLIENT_SECRET}'
+      - 'SPOTIFY_CLIENT_ID=${_SPOTIFY_CLIENT_ID}'
+      - 'SPOTIFY_CLIENT_SECRET=${_SPOTIFY_CLIENT_SECRET}'
       - 'SPOTIFY_CALLBACK=https://swot-tesla-lyrics.wm.r.appspot.com/spotify/callback'
       # guaqb music api params
-      - 'GUAQB_KEY=\${_GUAQB_KEY}'
-      - 'GUAQB_SECRET=\${_GUAQB_SECRET}'
+      - 'GUAQB_KEY=${_GUAQB_KEY}'
+      - 'GUAQB_SECRET=${_GUAQB_SECRET}'
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
 timeout: "1600s"
