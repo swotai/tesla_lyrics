@@ -17,6 +17,8 @@ Suggest to mount the `.env` as a bind mount
 
 ### Google App Engine
 
+If deploying to AE, need some special arrangement for the env file [env file in GAE](https://medium.com/@brian.young.pro/how-to-add-environmental-variables-to-google-app-engine-node-js-using-cloud-build-5ce31ee63d7)
+
 1. Store env vars in Google Cloud’s Build Trigger
 2. Read in env vars from the Build Trigger in one of its build steps
 3. Write env vars to a local .env file
