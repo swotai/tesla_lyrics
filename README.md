@@ -81,3 +81,7 @@ Why? coz how else can i secure my keys and secrets...
 nodejs return redirect
 > 302 redirect
 resp.write
+
+### caching
+
+[caching in express](https://blog.bitsrc.io/server-side-caching-in-expressjs-24038daec102)
