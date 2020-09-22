@@ -54,7 +54,7 @@ const updatePlayer = (lrc) => {
       mediaElement: $("#audio-1")[0],
       viewMode: "default",
       alignment: "center",
-      height: 380,
+      height: 500,
     });
   }
 };

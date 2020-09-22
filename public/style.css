@@ -1,5 +1,19 @@
 .rabbit-lyrics {
-  font-size: x-large;
+  /* font-size: 48px; */
+  /* line-height: 50px; */
+  font-size: 3.5em;
+  line-height: 1.1em;
+}
+
+.button {
+  height: 5em;
+  line-height: 5em;
+  vertical-align: middle;
+}
+
+#songTable {
+  font-size: 1.5em;
+  line-height: 1em;
 }
 
 /* body {

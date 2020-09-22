@@ -15,12 +15,13 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
     /> -->
     <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </header>
 
   <body>
     <div class="ui container" id="main-app">
       <!-- Nav menu -->
-      <div class="ui three item inverted green menu" id="navHeader">
+      <div class="ui two item inverted green massive menu" id="navHeader">
         <a class="item" href="/">
           <i class="headphones icon"></i>
           <i class="closed Captioning icon"></i>
@@ -30,10 +31,10 @@
           <i class="spotify icon"></i>
           Login
         </a>
-        <a class="item" href="/debug">
+        <!-- <a class="item" href="/debug">
           <i class="stethoscope icon"></i>
           Debug form
-        </a>
+        </a> -->
       </div>
 
       <!-- Error template -->
@@ -127,7 +128,7 @@
           </div>
 
           <div class="row">
-            <div class="ui segment four wide column">
+            <div class="ui segment four wide column" style="height:600px;overflow-y: scroll;">
               <table class="ui celled table" id="songTable">
                 <thead>
                   <tr>
@@ -147,7 +148,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="ui segment twelve wide column">
+            <div class="ui segment twelve wide column" style="height:600px">
               <div class="ui segment">
                 <div id="lyrics-container">
                   <div id="lyrics-1">
@@ -179,14 +180,14 @@
             Hi {{userName}}, You are logged in to spotify.
             <br />
             <br />
-            <div class="ui primary submit button" id="spotifyLogoutBtn">
+            <div class="ui massive primary submit button" id="spotifyLogoutBtn">
               Logout
             </div>
           {{else}}
             Login to sync lyrics!
             <br />
             <br />
-            <div class="ui primary submit button" id="spotifyLoginBtn">
+            <div class="ui massive primary submit button" id="spotifyLoginBtn" >
               Login
             </div>
           {{/if}}
