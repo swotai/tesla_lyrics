@@ -19,3 +19,6 @@ steps:
   - name: "gcr.io/cloud-builders/gcloud"
     args: ["app", "deploy"]
 timeout: "1600s"
+artifacts:
+  objects:
+    location: 'gs://swot-tesla-lyrics-build-artifacts/'
