@@ -14,17 +14,17 @@
 #songTable {
   font-size: 1.5em;
   line-height: 1em;
+  background-color: white !important;
+  color: black !important;
 }
 
 body {
   /* padding: 25px; */
   background-color: white;
   color: black;
-  /* font-size: 25px; */
 }
 
 .dark-mode {
-  background-color: rgba(0, 0, 0, 0.8);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background-color: rgb(80, 80, 80) !important;
+  color: rgb(218, 218, 218) !important;
 }

@@ -8,15 +8,11 @@
     <script src="scripts/semantic-ui-css/semantic.min.js"></script>
     <script src="scripts/vanilla-router/dist/vanilla-router.min.js"></script>
     <script src="scripts/rabbit-lyrics/dist/rabbit-lyrics.js"></script>
-    <script src="js/app.js"></script>
     <link rel="stylesheet" href="scripts/semantic-ui-css/semantic.min.css" />
-    <!-- <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
-    /> -->
     <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
+    <script src="js/app.js"></script>
   </header>
 
   <body>
@@ -100,8 +96,9 @@
             <div
               class="ui segment four wide column"
               style="height:600px;overflow-y: scroll;"
+              id="makeGrey1"
             >
-              <table class="ui celled table" id="songTable">
+              <table class="ui celled table" id="songTable" id="makeGrey1a">
                 <thead>
                   <tr>
                     <th>
@@ -120,9 +117,13 @@
                 </tbody>
               </table>
             </div>
-            <div class="ui segment twelve wide column" style="height:600px">
-              <div class="ui segment">
-                <div id="lyrics-container">
+            <div
+              class="ui segment twelve wide column"
+              style="height:600px"
+              id="makeGrey2"
+            >
+              <div class="ui segment" id="makeGrey2a">
+                <div id="lyrics-container" id="makeGrey2b">
                   <div id="lyrics-1">
                     Refresh spotify to load songs
                   </div>

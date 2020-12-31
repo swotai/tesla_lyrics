@@ -78,7 +78,14 @@ const darkMode = () => {
   var element = document.body;
   var uis = document.getElementsByClassName("ui");
   element.classList.toggle("dark-mode");
-  uis.classList.toggle("dark-mode");
+  checkbox = document.getElementById("darkModeBtn");
+  if (checkbox.checked == true) {
+    $(".rabbit-lyrics").addClass("dark-mode");
+    $("[id^=makeGrey]").toggleClass("dark-mode");
+  } else {
+    $(".rabbit-lyrics").removeClass("dark-mode");
+    $("[id^=makeGrey]").toggleClass("dark-mode");
+  }
 };
 
 // Interface logic
