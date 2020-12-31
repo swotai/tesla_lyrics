@@ -69,6 +69,18 @@ const selectLyrics = (inList, songid) => {
   updatePlayer(song.lrc);
 };
 
+/**
+ * Dark mode
+ * Taking an easy way out here, on click of the toggle (default to not checked)
+ * it will simply toggle dark mode
+ */
+const darkMode = () => {
+  var element = document.body;
+  var uis = document.getElementsByClassName("ui");
+  element.classList.toggle("dark-mode");
+  uis.classList.toggle("dark-mode");
+};
+
 // Interface logic
 window.addEventListener("load", () => {
   const app = $("#app");
@@ -78,7 +90,7 @@ window.addEventListener("load", () => {
   // Compile Handlebar Templates
   const errorTemplate = Handlebars.compile($("#error-tmp").html());
   const errorMsgTemplate = Handlebars.compile($("#error-message-tmp").html());
-  const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-tmp").html());
+  // const lyricsFormTemplate = Handlebars.compile($("#lyrics-form-tmp").html());
   const lyricsTemplate = Handlebars.compile($("#lyrics-tmp").html());
   const loginTemplate = Handlebars.compile($("#login-tmp").html());
 
@@ -118,10 +130,10 @@ window.addEventListener("load", () => {
         userName,
       });
       app.html(html);
-      $("#spotifyLoginBtn").click(() => {
+      $("#spotifyLoginBtn").on("click", () => {
         window.location.href = "/spotify/auth";
       });
-      $("#spotifyLogoutBtn").click(() => {
+      $("#spotifyLogoutBtn").on("click", () => {
         window.location.href = "/spotify/logout";
       });
       $(".loading").removeClass("loading");
@@ -174,7 +186,7 @@ window.addEventListener("load", () => {
     let html = lyricsTemplate();
     app.html(html);
     err.html("");
-    $("#syncSpotifyBtn").click(refreshLyricsFromSpotify);
+    $("#syncSpotifyBtn").on("click", refreshLyricsFromSpotify);
   });
 
   // Auto reload: wait for the player time pass the duration, then trigger refresh
@@ -255,6 +267,7 @@ window.addEventListener("load", () => {
   const link = $(`a[href$='${window.location.pathname}']`);
   link.addClass("active");
 
+  // main menu stuff
   $("a").on("click", (event) => {
     // Block browser page load
     event.preventDefault();
@@ -270,4 +283,3 @@ window.addEventListener("load", () => {
     router.navigateTo(path);
   });
 });
-

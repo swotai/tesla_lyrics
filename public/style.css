@@ -16,6 +16,14 @@
   line-height: 1em;
 }
 
-/* body {
-  font-family: "Noto Sans TC", sans-serif;
-} */
+body {
+  /* padding: 25px; */
+  background-color: white;
+  color: black;
+  /* font-size: 25px; */
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}

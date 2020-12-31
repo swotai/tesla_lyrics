@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <header>
-    <title>test</title>
+    <title>Web Lyrics</title>
     <script src="scripts/axios/dist/axios.min.js"></script>
     <script src="scripts/jquery/dist/jquery.min.js"></script>
     <script src="scripts/handlebars/dist/handlebars.min.js"></script>
@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap"
     /> -->
     <link rel="stylesheet" href="style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </header>
 
   <body>
@@ -63,46 +63,6 @@
         </div>
       </script>
 
-      <!-- Lyrics form Template -->
-      <script id="lyrics-form-tmp" type="text/x-handlebars-template">
-        <h1 class="ui header">
-          Lyrics form
-        </h1>
-        <div class="ui basic segment" id="lyrics-form">
-          <form class="ui form">
-            <div class="two fields">
-              <div class="field">
-                <label>
-                  Song
-                </label>
-                <input
-                  type="text"
-                  name="song"
-                  id="song"
-                  placeholder="Song Name"
-                />
-              </div>
-              <div class="field">
-                <label>
-                  Artist
-                </label>
-                <input
-                  type="text"
-                  name="artist"
-                  id="artist"
-                  placeholder="Artist Name (optional)"
-                />
-              </div>
-            </div>
-            <div class="ui primary submit button" id="findLyricsFromForm">
-              Submit
-            </div>
-            <div class="ui error message"></div>
-          </form>
-        </div>
-        <hr />
-      </script>
-
       <!-- Lyrics Template -->
       <script id="lyrics-tmp" type="text/x-handlebars-template">
         <h1 class="ui header">
@@ -125,10 +85,21 @@
               <br />
               <div id="spotifyInfo"></div>
             </div>
+            <div class="ui two wide column">
+              <div class="ui toggle checkbox">
+                <input type="checkbox" id="darkModeBtn" onclick="darkMode()" />
+                <label>
+                  <i class="moon icon"></i>
+                </label>
+              </div>
+            </div>
           </div>
 
           <div class="row">
-            <div class="ui segment four wide column" style="height:600px;overflow-y: scroll;">
+            <div
+              class="ui segment four wide column"
+              style="height:600px;overflow-y: scroll;"
+            >
               <table class="ui celled table" id="songTable">
                 <thead>
                   <tr>
@@ -187,7 +158,7 @@
             Login to sync lyrics!
             <br />
             <br />
-            <div class="ui massive primary submit button" id="spotifyLoginBtn" >
+            <div class="ui massive primary submit button" id="spotifyLoginBtn">
               Login
             </div>
           {{/if}}
