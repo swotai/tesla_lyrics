@@ -107,6 +107,24 @@ window.addEventListener("load", () => {
     },
   });
 
+  // Display Error Banner
+  const showError = (error) => {
+    if (error.response == undefined && error.message) {
+      const title = "Code error";
+      const message = error.message;
+      const html = errorMsgTemplate({ title, message });
+      err.html(html);
+      $(".message .close").on("click", function () {
+        $(this).closest(".message").transition("fade");
+      });
+    } else {
+      const { title, message } = error.response.data;
+      const html = errorTemplate({ color: "red", title, message });
+      err.html(html);
+    }
+    console.log(error);
+  };
+
   // Instantiate api handler
   const api = axios.create({
     baseURL: `${window.location.protocol}//${window.location.host}`,
