@@ -184,6 +184,12 @@ window.addEventListener("load", () => {
         audioPlayer.currentTime = player.progress_ms / 1000;
         audioPlayer.play();
         $("#spotifyInfo").html(`${player.name} - ${player.artist}`);
+        var timeLeft = player.duration_ms - player.progress_ms + 250;
+        if ($("#autoSyncBtn").is(":checked")) {
+          setTimeout(() => {
+            $("#syncSpotifyBtn").trigger("click");
+          }, timeLeft);
+        }
         // get lyrics
         const lyricsResults = await api.get("/lyrics_svc/lyrics", {
           params: { song: player.name, artist: player.artist },
