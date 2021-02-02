@@ -179,6 +179,13 @@ window.addEventListener("load", () => {
       const spotifyPlayer = await api.get("/spotify/player");
       player = spotifyPlayer.data;
       if (player.is_playing) {
+        // Trigger autosync
+        var timeLeft = player.duration_ms - player.progress_ms + 100;
+        if ($("#autoSyncBtn").is(":checked")) {
+          setTimeout(() => {
+            $("#syncSpotifyBtn").trigger("click");
+          }, timeLeft);
+        }
         // update audio player and start playing
         let audioPlayer = $("#audio-1")[0];
         audioPlayer.currentTime = player.progress_ms / 1000;
