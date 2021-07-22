@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/firestore": "^4.2.0",
+    "@google-cloud/firestore": "^4.13.2",
     "axios": "^0.21.1",
     "compression": "^1.7.4",
     "cookie-session": "^1.4.0",
