@@ -63,7 +63,7 @@ const errorHandler = (err, req, res) => {
 };
 
 // service routes
-app.use("/lyrics_svc", require("./lib/guaqb-service").lyrics_router);
+app.use("/lyrics_svc", require("./lib/lyrics-service").lyrics_router);
 app.use("/spotify", require("./lib/spotify-service").spotify_router);
 
 // Redirect all traffic to index.html
@@ -81,7 +81,7 @@ if (isDebug) {
       getLyrics,
       getLyrics1,
       getLyrics2,
-    } = require("./lib/guaqb-service");
+    } = require("./lib/lyrics-service");
 
     // var data = await getLyrics1('洋蔥');
     // console.log(data);
