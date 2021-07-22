@@ -1,0 +1,2 @@
+const test = require("./lib/opencc_wrapper");
+let ac = test.test("无论在那个天地里");
