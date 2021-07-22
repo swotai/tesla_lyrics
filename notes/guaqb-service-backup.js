@@ -7,9 +7,9 @@ const musicServiceType = "163";
 const maxResult = 15;
 let cacheMiddleWare;
 if (process.env.RUNENV == "local") {
-  cacheMiddleWare = require("./lyics-cache").cacheLocal;
+  cacheMiddleWare = require("./lyrics-cache").cacheLocal;
 } else {
-  cacheMiddleWare = require("./lyics-cache").cacheFirestore;
+  cacheMiddleWare = require("./lyrics-cache").cacheFirestore;
 }
 
 // Chinese converters
