@@ -192,12 +192,13 @@ window.addEventListener("load", () => {
         audioPlayer.play();
         $("#spotifyInfo").html(`${player.name} - ${player.artist}`);
         // get lyrics
-        const lyricsResults = await api.get("/lyrics_svc/lyrics", {
+        // TODO: Update this to lyrics_svc/search_song
+        const lyricsResults = await api.get("/lyrics_svc/search_song", {
           params: { song: player.name, artist: player.artist },
         });
         songList = lyricsResults.data.data;
         var match = lyricsResults.data.match;
-        console.log(match);
+        console.log(`Found match: ${match}`);
         // update table
         updateSongTable(songList);
         // if there's match, update lyrics
@@ -239,13 +240,13 @@ window.addEventListener("load", () => {
     err.html("");
     // send post data for lyrics
     try {
-      const response = await api.post("/lyrics_svc/lyrics", { song, artist });
-      const { name, author, album, lrc } = response.data[0];
+      const response = await api.post("/lyrics_svc/search_song", { song, artist });
+      const { name, author, album, songid } = response.data[0];
       let html = lyricsTemplate({
         name,
         author,
         album,
-        lrc,
+        songid,
       });
       app.html(html);
     } catch (error) {
