@@ -18,7 +18,7 @@ const updateSongTable = (inList) => {
   } else {
     songList.forEach((element) => {
       tbl.append(
-        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name} - ${element.author} - ${element.songid}</a></td></tr>`
+        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name} - ${element.author}</a></td></tr>`
       );
     });
   }
