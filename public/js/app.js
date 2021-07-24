@@ -1,3 +1,9 @@
+// Instantiate api handler
+const api = axios.create({
+  baseURL: `${window.location.protocol}//${window.location.host}`,
+  timeout: 12000,
+});
+
 /**
  * Updates table based on inList
  * @param {object} inList
@@ -12,7 +18,7 @@ const updateSongTable = (inList) => {
   } else {
     songList.forEach((element) => {
       tbl.append(
-        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name} - ${element.author}</a></td></tr>`
+        `<tr><td class="selectable"><a onclick="selectLyrics(songList, '${element.songid}')">${element.name} - ${element.author} - ${element.songid}</a></td></tr>`
       );
     });
   }
@@ -23,16 +29,20 @@ const updateSongTable = (inList) => {
  * @param {object} inList
  * @param {string} songid
  */
-const filterLyrics = (inList, songid) => {
+const filterLyrics = async (inList, songid) => {
+  // console.log(`Get lyrics in filterlyrics for id: ${songid}`);
   try {
-    let selected = inList.filter((item) => {
-      return item.songid == songid.toString();
+    const idLyrics = await api.get("/lyrics_svc/get_lyrics_from_id", {
+      params: { id: songid },
     });
-    return selected[0];
+    var result = idLyrics.data;
+    // console.log(`results: ${result.lrc}`);
+    return result;
   } catch (error) {
     return null;
   }
 };
+
 
 /**
  * update player section
@@ -64,8 +74,9 @@ const updatePlayer = (lrc) => {
  * @param {object} inList
  * @param {string} songid
  */
-const selectLyrics = (inList, songid) => {
-  let song = filterLyrics(inList, songid);
+const selectLyrics = async (inList, songid) => {
+  let song = await filterLyrics(inList, songid);
+  // console.log(song.lrc);
   updatePlayer(song.lrc);
 };
 
@@ -131,12 +142,6 @@ window.addEventListener("load", () => {
     }
     console.log(error);
   };
-
-  // Instantiate api handler
-  const api = axios.create({
-    baseURL: `${window.location.protocol}//${window.location.host}`,
-    timeout: 12000,
-  });
 
   router.add("/login", async () => {
     let isSpotifyAuth = false;
