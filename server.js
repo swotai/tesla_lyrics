@@ -83,7 +83,7 @@ if (isDebug) {
       getLyrics,
       getLyrics1,
       getLyrics2,
-    } = require("./lib/guaqb-service");
+    } = require("./lib/lyrics-service");
 
     // var data = await getLyrics1('洋蔥');
     // console.log(data);
