@@ -29,20 +29,16 @@ const updateSongTable = (inList) => {
  * @param {object} inList
  * @param {string} songid
  */
-const filterLyrics = async (inList, songid) => {
-  // console.log(`Get lyrics in filterlyrics for id: ${songid}`);
+const filterLyrics = (inList, songid) => {
   try {
-    const idLyrics = await api.get("/lyrics_svc/get_lyrics_from_id", {
-      params: { id: songid },
+    let selected = inList.filter((item) => {
+      return item.songid == songid.toString();
     });
-    var result = idLyrics.data;
-    // console.log(`results: ${result.lrc}`);
-    return result;
+    return selected[0];
   } catch (error) {
     return null;
   }
 };
-
 
 /**
  * update player section
@@ -74,9 +70,8 @@ const updatePlayer = (lrc) => {
  * @param {object} inList
  * @param {string} songid
  */
-const selectLyrics = async (inList, songid) => {
-  let song = await filterLyrics(inList, songid);
-  // console.log(song.lrc);
+const selectLyrics = (inList, songid) => {
+  let song = filterLyrics(inList, songid);
   updatePlayer(song.lrc);
 };
 
@@ -244,13 +239,13 @@ window.addEventListener("load", () => {
     err.html("");
     // send post data for lyrics
     try {
-      const response = await api.post("/lyrics_svc/search_song", { song, artist });
-      const { name, author, album, songid } = response.data[0];
+      const response = await api.post("/lyrics_svc/lyrics", { song, artist });
+      const { name, author, album, lrc } = response.data[0];
       let html = lyricsTemplate({
         name,
         author,
         album,
-        songid,
+        lrc,
       });
       app.html(html);
     } catch (error) {
