@@ -195,11 +195,10 @@ window.addEventListener("load", () => {
         let audioPlayer = $("#audio-1")[0];
         audioPlayer.currentTime = player.progress_ms / 1000;
         audioPlayer.play();
-        $("#spotifyInfo").html(`${player.name} - ${player.artist}`);
+        $("#spotifyInfo").html(`${player.name} - ${player.artist} - ${player.album}`);
         // get lyrics
-        // TODO: Update this to lyrics_svc/search_song
-        const lyricsResults = await api.get("/lyrics_svc/search_song", {
-          params: { song: player.name, artist: player.artist },
+        const lyricsResults = await api.get("/lyrics_svc/lyrics", {
+          params: { song: player.name, artist: player.artist, album: player.album },
         });
         songList = lyricsResults.data.data;
         var match = lyricsResults.data.match;
