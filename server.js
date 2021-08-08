@@ -63,7 +63,7 @@ const errorHandler = (err, req, res) => {
 };
 
 // service routes
-app.use("/lyrics_svc_1", require("./lib/guaqb-service").lyrics_router);
+// app.use("/lyrics_svc_1", require("./lib/lyrics-service").lyrics_router);
 app.use("/spotify", require("./lib/spotify-service").spotify_router);
 app.use("/lyrics_svc", require("./lib/lyrics-service-simple").lyrics_router);
 
