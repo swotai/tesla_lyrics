@@ -65,6 +65,8 @@ const errorHandler = (err, req, res) => {
 // service routes
 app.use("/lyrics_svc", require("./lib/guaqb-service").lyrics_router);
 app.use("/spotify", require("./lib/spotify-service").spotify_router);
+app.use("/lyrics_svc_1", require("./lib/lyrics-service-simple").lyrics_router);
+
 
 // Redirect all traffic to index.html
 app.use((req, res) => res.sendFile(`${__dirname}/public/index.html`));
