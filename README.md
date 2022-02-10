@@ -29,13 +29,17 @@ Service account permissions
 - Enable the [AE admin API](https://console.developers.google.com/apis/library/appengine.googleapis.com?project=swot-tesla-lyrics)
 - configure the cloud build service account permission, [enable app engine admin](https://cloud.google.com/cloud-build/docs/deploying-builds/deploy-appengine)
 
+### Setting up google cloud build
+
+How? I forgot
+
 ### Other necessary preparation
 
 [How to get a node/express app production ready](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/deployment)
 
 ## notes
 
-Inspired from [小明Player](http://music.guaqb.cn/2/)
+Inspired from [小明 Player](http://music.guaqb.cn/2/)
 
 ### Structure of guaqb api
 
@@ -64,7 +68,7 @@ Finding the right lyrics
 [JS filtering response](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f/)
 
 ```javascript
-let res = users.filter(it => it.name.includes('oli'));
+let res = users.filter((it) => it.name.includes("oli"));
 ```
 
 Notes: _Simple filter works just fine it appears_
@@ -79,8 +83,9 @@ Why? coz how else can i secure my keys and secrets...
 [PassportJS](http://www.passportjs.org/docs/downloads/html/)
 [SQLite](https://healeycodes.com/javascript/webdev/beginners/tutorial/2019/06/03/saving-data-in-javascript-without-a-database.html)
 nodejs return redirect
+
 > 302 redirect
-resp.write
+> resp.write
 
 ### caching
 
