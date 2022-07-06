@@ -1,6 +1,8 @@
 # README
 
 Simple app to read the spotify status and show some lyrics on the tesla screen
+## _NOTE_
+This app is now obsolete. Tesla's built in browser now supports using [Spotify Web Lyrics](open.spotify.com/lyrics) directly.
 
 ## How to deploy
 
